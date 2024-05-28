@@ -49,5 +49,14 @@ namespace QuanLyGara
             form1 = null;
             this.Show();
         }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            DanhSachXe form2 = new DanhSachXe();
+            this.Hide();
+            form2.ShowDialog();
+            form2 = null;
+            this.Show();
+        }
     }
 }
