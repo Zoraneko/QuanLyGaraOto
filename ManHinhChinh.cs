@@ -20,25 +20,20 @@ namespace QuanLyGara
             InitializeComponent();
         }
 
-        private void button3_Click(object sender, EventArgs e)
-        {
-
-        }
-
+     
         private void button4_Click(object sender, EventArgs e)
         {
             DialogResult dx = MessageBox.Show("Bạn có chắc là muốn Đăng xuất?", "Quản Lý Gara", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-            if (dx == DialogResult.OK)
+            if (dx == DialogResult.Yes)
             {
                 this.Close();
             }    
-              
         }
 
         private void ManHinhChinh_Load(object sender, EventArgs e)
         {
-            label2.Text = this.ten;
-            label4.Text = this.vaitro;
+            textBox1.Text = this.ten;
+            textBox2.Text = this.vaitro;
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -59,9 +54,33 @@ namespace QuanLyGara
             this.Show();
         }
 
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            BaoCaoDoanhSo bcds = new BaoCaoDoanhSo();
+            this.Hide();
+            bcds.ShowDialog();
+            bcds = null;
+            this.Show();
+        }
+
+
         private void button6_Click(object sender, EventArgs e)
         {
+            BaoCaoTon bct = new BaoCaoTon();
+            this.Hide();
+            bct.ShowDialog();
+            bct = null;
+            this.Show();
+        }
 
+        private void button5_Click(object sender, EventArgs e)
+        {
+            ThayDoiQuyDinh tdqd = new ThayDoiQuyDinh();
+            this.Hide();
+            tdqd.ShowDialog();
+            tdqd = null;
+            this.Show();
         }
     }
 }

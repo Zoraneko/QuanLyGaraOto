@@ -43,90 +43,100 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(46, 53);
+            this.label1.Location = new System.Drawing.Point(26, 29);
+            this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(192, 29);
+            this.label1.Size = new System.Drawing.Size(105, 16);
             this.label1.TabIndex = 0;
             this.label1.Text = "Số lượng hiệu xe";
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(46, 124);
+            this.label2.Location = new System.Drawing.Point(26, 68);
+            this.label2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(364, 29);
+            this.label2.Size = new System.Drawing.Size(203, 16);
             this.label2.TabIndex = 1;
             this.label2.Text = "Số xe sửa chữa tối đa trong ngày:";
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(46, 196);
+            this.label3.Location = new System.Drawing.Point(26, 108);
+            this.label3.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(253, 29);
+            this.label3.Size = new System.Drawing.Size(139, 16);
             this.label3.TabIndex = 2;
             this.label3.Text = "Số loại vật tư phụ tùng:";
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(46, 268);
+            this.label4.Location = new System.Drawing.Point(26, 148);
+            this.label4.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(198, 29);
+            this.label4.Size = new System.Drawing.Size(109, 16);
             this.label4.TabIndex = 3;
             this.label4.Text = "Số loại tiền công:";
             // 
             // textBox1
             // 
-            this.textBox1.Location = new System.Drawing.Point(522, 55);
+            this.textBox1.Location = new System.Drawing.Point(298, 30);
+            this.textBox1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(100, 35);
+            this.textBox1.Size = new System.Drawing.Size(59, 22);
             this.textBox1.TabIndex = 4;
             // 
             // textBox2
             // 
-            this.textBox2.Location = new System.Drawing.Point(531, 124);
+            this.textBox2.Location = new System.Drawing.Point(298, 68);
+            this.textBox2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(100, 35);
+            this.textBox2.Size = new System.Drawing.Size(59, 22);
             this.textBox2.TabIndex = 5;
             // 
             // textBox3
             // 
-            this.textBox3.Location = new System.Drawing.Point(529, 203);
+            this.textBox3.Location = new System.Drawing.Point(298, 108);
+            this.textBox3.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(100, 35);
+            this.textBox3.Size = new System.Drawing.Size(59, 22);
             this.textBox3.TabIndex = 6;
             // 
             // textBox4
             // 
-            this.textBox4.Location = new System.Drawing.Point(526, 272);
+            this.textBox4.Location = new System.Drawing.Point(298, 148);
+            this.textBox4.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.textBox4.Name = "textBox4";
-            this.textBox4.Size = new System.Drawing.Size(100, 35);
+            this.textBox4.Size = new System.Drawing.Size(59, 22);
             this.textBox4.TabIndex = 7;
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(152, 375);
+            this.button1.Location = new System.Drawing.Point(87, 207);
+            this.button1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(103, 59);
+            this.button1.Size = new System.Drawing.Size(59, 33);
             this.button1.TabIndex = 8;
             this.button1.Text = "Lưu";
             this.button1.UseVisualStyleBackColor = true;
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(426, 375);
+            this.button2.Location = new System.Drawing.Point(243, 207);
+            this.button2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(106, 57);
+            this.button2.Size = new System.Drawing.Size(61, 31);
             this.button2.TabIndex = 9;
             this.button2.Text = "Thoát";
             this.button2.UseVisualStyleBackColor = true;
             // 
             // ThayDoiQuyDinh
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(14F, 29F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(878, 495);
+            this.ClientSize = new System.Drawing.Size(502, 273);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.textBox4);
@@ -137,6 +147,7 @@
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
+            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.Name = "ThayDoiQuyDinh";
             this.Text = "Thay đổi quy định";
             this.ResumeLayout(false);
