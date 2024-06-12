@@ -26,14 +26,7 @@ namespace QuanLyGara
         string str = string.Format(@"Data Source={0}\QLGR.db;Version = 3;",Application.StartupPath);
         
         
-        private void listView1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (listView1.SelectedItems.Count > 0)
-            {
-                textBox3.Text = listView1.SelectedItems[0].SubItems[1].Text.ToString();
-                comboBox1.Text = listView1.SelectedItems[0].SubItems[2].Text.ToString();
-            }
-        }
+        
 
         private void button1_Click(object sender, EventArgs e)// nút thêm
         {
@@ -47,26 +40,26 @@ namespace QuanLyGara
             thanhTien = donGia * int.Parse(numericUpDown1.Value.ToString()) + tienCong;
            
             //
-            if (str1 != "" && str2 != "")
+            /*if (str1 != "" && str2 != "")
             {
                 ListViewItem item = new ListViewItem(new[] { (listView1.Items.Count + 1).ToString(), str1, str2, str3, donGia.ToString(), tienCong.ToString(), thanhTien.ToString() });
                 listView1.Items.Add(item);
-            }
+            }*/
         }
 
         private void button2_Click(object sender, EventArgs e) //xóa
         {
-            if (listView1.SelectedItems.Count > 0)
+            /*if (listView1.SelectedItems.Count > 0)
             {
                 listView1.Items.Remove(listView1.SelectedItems[0]);
-            }
+            }*/
 
             // cap nhat lai STT...
         }
 
         private void button3_Click(object sender, EventArgs e)//sửa
         {
-            if (listView1.SelectedItems.Count > 0)
+            /*if (listView1.SelectedItems.Count > 0)
             {
                 listView1.SelectedItems[0].SubItems[1].Text = textBox3.Text.ToString();
                 listView1.SelectedItems[0].SubItems[2].Text = comboBox1.Text.ToString();
@@ -75,7 +68,7 @@ namespace QuanLyGara
                 // sửa lại đơn giá, tien cong, thanh tien
 
                 //
-            }
+            }*/
         }
 
         private void button4_Click(object sender, EventArgs e)//hoàn thành
