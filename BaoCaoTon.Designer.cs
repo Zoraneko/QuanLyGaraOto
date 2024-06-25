@@ -283,10 +283,10 @@
             // 
             this.button7.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.button7.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.button7.Location = new System.Drawing.Point(724, 23);
+            this.button7.Location = new System.Drawing.Point(714, 21);
             this.button7.Margin = new System.Windows.Forms.Padding(2);
             this.button7.Name = "button7";
-            this.button7.Size = new System.Drawing.Size(117, 39);
+            this.button7.Size = new System.Drawing.Size(127, 40);
             this.button7.TabIndex = 7;
             this.button7.Text = "Quy định";
             this.button7.UseVisualStyleBackColor = true;
