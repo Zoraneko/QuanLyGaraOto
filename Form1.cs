@@ -31,7 +31,7 @@ namespace QuanLyGara
 
         void LoadDatabase()
         {
-            string query = "SELECT * FROM XE";
+            string query = "SELECT * FROM TIEPNHANXESUA";
             using (SQLiteConnection con = new SQLiteConnection(str))
             {
                 con.Open();
@@ -50,7 +50,7 @@ namespace QuanLyGara
         
         private void button1_Click(object sender, EventArgs e) // thêm
         {
-            
+            //
         }
        
         private void button2_Click(object sender, EventArgs e) // xóa
