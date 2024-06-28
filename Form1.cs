@@ -50,17 +50,38 @@ namespace QuanLyGara
         
         private void button1_Click(object sender, EventArgs e) // thêm
         {
-            //
+            string query = String.Format("INSERT INTO TIEPNHANXESUA (TenChuXe,BienSo,HieuXe,DiaChi,DienThoai,NgayTiepNhan) VALUES('{0}','{1}','{2}','{3}','{4}','{5}');"
+                ,textBox1.Text,textBox2.Text,comboBox1.Text,textBox3.Text,int.Parse(textBox4.Text),dateTimePicker1.Value.ToString("dd/MM/yyyy"));
+            Execute(query);
         }
        
+        void Execute(string query)
+        {
+            using (SQLiteConnection con = new SQLiteConnection(str)) 
+            { 
+                con.Open(); 
+                SQLiteCommand cmd = new SQLiteCommand(query, con);
+                int result = cmd.ExecuteNonQuery();
+                if(result == 1)
+                {
+                    MessageBox.Show("Successfull");
+                    LoadDatabase();
+                }
+            }
+
+        }
+
         private void button2_Click(object sender, EventArgs e) // xóa
         {
-
+            string query = String.Format("DELETE FROM TIEPNHANXESUA WHERE BienSo='{0}' and NgayTiepNhan = '{1}' ;",textBox2.Text,dateTimePicker1.Value.ToString("dd/MM/yyyy"));
+            Execute(query);
         }
 
         private void button3_Click(object sender, EventArgs e) // sửa
         {
-
+            string query = String.Format("UPDATE TIEPNHANXESUA SET TenChuXe='{0}',HieuXe='{2}',DiaChi='{3}',DienThoai='{4}',NgayTiepNhan='{5}' WHERE BienSo='{1}';"
+                , textBox1.Text, textBox2.Text, comboBox1.Text, textBox3.Text, int.Parse(textBox4.Text), dateTimePicker1.Value.ToString("dd/MM/yyyy"));
+            Execute(query);
         }
 
         private void button4_Click(object sender, EventArgs e) // thoát
@@ -142,6 +163,26 @@ namespace QuanLyGara
             }
             
             
+        }
+
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+           
+        }
+
+        
+
+        private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            foreach (DataGridViewRow row in dataGridView1.SelectedRows)
+            {
+                textBox1.Text = row.Cells[0].Value.ToString();
+                textBox2.Text = row.Cells[1].Value.ToString();
+                comboBox1.Text = row.Cells[2].Value.ToString();
+                textBox3.Text = row.Cells[3].Value.ToString();
+                textBox4.Text = row.Cells[4].Value.ToString();
+
+            }
         }
     }
 }
