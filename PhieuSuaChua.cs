@@ -82,9 +82,11 @@ namespace QuanLyGara
         {
             textBox1.Text = bienSo;
             textBox2.Text = ngaySuaChua;
-            LoadDatabase();
+            LoadVatTu();
+            LoadDatabase();           
         }
 
+       
         private void LoadDatabase()
         {
             string query = "SELECT * FROM PHIEUSUACHUA";
@@ -95,6 +97,20 @@ namespace QuanLyGara
                 DataTable dt = new DataTable();
                 da.Fill(dt);
                 dataGridView1.DataSource = dt;
+            }
+        }
+
+        void LoadVatTu()
+        {
+            string query = "SELECT TenVatTu  FROM VATTU";
+            using (SQLiteConnection con = new SQLiteConnection(str))
+            {
+                con.Open();
+                SQLiteDataAdapter da = new SQLiteDataAdapter(query, con);
+                DataTable dt = new DataTable();
+                da.Fill(dt);
+                comboBox1.DataSource = dt;
+                comboBox1.DisplayMember = "TenVatTu";
             }
         }
     }

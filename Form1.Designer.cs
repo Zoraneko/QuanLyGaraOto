@@ -341,7 +341,11 @@
             this.dataGridView1.Size = new System.Drawing.Size(590, 241);
             this.dataGridView1.TabIndex = 18;
             this.dataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellClick);
+<<<<<<< Updated upstream
             this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
+=======
+       
+>>>>>>> Stashed changes
             // 
             // groupBox2
             // 
