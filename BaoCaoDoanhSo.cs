@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Data.SQLite;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -29,7 +30,43 @@ namespace QuanLyGara
 
         private void button1_Click(object sender, EventArgs e)
         {
+            // Kiểm tra xem dataGridView có rỗng không
+            if (dataGridView1 != null && dataGridView1.RowCount > 1)
+            {
+                // Lấy đường dẫn đến thư mục Documents của người dùng
+                string filePath = @"D:\report.csv";
 
+
+                // Mở stream để ghi dữ liệu
+                using (StreamWriter writer = new StreamWriter(filePath))
+                {
+                    // Ghi tiêu đề cột
+                    for (int i = 0; i < dataGridView1.Columns.Count; i++)
+                    {
+                        writer.Write(dataGridView1.Columns[i].HeaderText);
+                        if (i < dataGridView1.Columns.Count - 1)
+                        {
+                            writer.Write(",");
+                        }
+                    }
+                    writer.WriteLine();
+
+                    // Ghi dữ liệu từng hàng
+                    for (int i = 0; i < dataGridView1.Rows.Count - 1; i++)
+                    {
+                        for (int j = 0; j < dataGridView1.Columns.Count; j++)
+                        {
+                            writer.Write(dataGridView1.Rows[i].Cells[j].Value.ToString());
+                            if (j < dataGridView1.Columns.Count - 1)
+                            {
+                                writer.Write(",");
+                            }
+                        }
+                        writer.WriteLine();
+                    }
+                }
+                MessageBox.Show("Dữ liệu đã được xuất thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
         }
 
         private void BaoCaoDoanhSo_Load(object sender, EventArgs e)
@@ -113,6 +150,67 @@ namespace QuanLyGara
                 tdqd = null;
                 this.Show();
             }
+        }
+
+        private void dateTimePicker1_ValueChanged(object sender, EventArgs e)
+        {
+            // Lấy thông số: tháng
+            string thang = dateTimePicker1.Value.Month.ToString();
+
+            // Lệnh query để lọc ra database và chỉ lấy các cột cần thiết tương ứng với tháng
+            string query = "SELECT Thang, HieuXe, SoLuotSuaChua,ThanhTien FROM DOANHSO WHERE Thang = " + thang;
+
+            // Kết nối database
+            using (SQLiteConnection con = new SQLiteConnection(str))
+            {
+                con.Open();
+                SQLiteDataAdapter da = new SQLiteDataAdapter(query, con);
+                DataTable dt = new DataTable();
+                da.Fill(dt);
+                dataGridView1.DataSource = dt;
+            }
+
+            // Tạo mới cột tỉ lệ 
+            if (!dataGridView1.Columns.Contains("Tile"))
+            {
+
+                dataGridView1.Columns.Add("TiLe", "TiLe");
+            }
+            // Trong trường hợp datagridView không rỗng
+            int tien = 0;
+            if (dataGridView1 != null && dataGridView1.RowCount>1)
+            {
+                // vòng lặp để tính tiền
+                for (int i = 0; i < dataGridView1.Rows.Count - 1; i++)
+                {
+                    try
+                    {
+                        tien += int.Parse(dataGridView1.Rows[i].Cells["ThanhTien"].Value.ToString());
+
+                    }
+                    catch (Exception)
+                    {
+
+                        throw;
+                    }
+                }
+                textBox1.Text=tien.ToString();
+
+                // vòng lặp để tính tỉ lệ
+                for (int j = 0; j < dataGridView1.Rows.Count - 1; j++)
+                {
+                    try
+                    {
+                        dataGridView1.Rows[j].Cells["TiLe"].Value = Math.Round((double.Parse(dataGridView1.Rows[j].Cells["ThanhTien"].Value.ToString()) * 100) / (double) tien, 2);
+                    }
+                    catch (Exception)
+                    {
+
+                        throw;
+                    }
+                }
+            }
+            
         }
     }
 }

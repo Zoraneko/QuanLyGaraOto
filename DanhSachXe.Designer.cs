@@ -68,20 +68,17 @@
             // 
             // textBox1
             // 
-            this.textBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBox1.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.textBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.textBox1.Location = new System.Drawing.Point(627, 49);
             this.textBox1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(135, 30);
+            this.textBox1.Size = new System.Drawing.Size(135, 26);
             this.textBox1.TabIndex = 13;
             // 
             // button1
             // 
-            this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.button1.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.button1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.button1.BackColor = System.Drawing.Color.Navy;
             this.button1.FlatAppearance.BorderSize = 0;
@@ -99,8 +96,7 @@
             // 
             // button2
             // 
-            this.button2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.button2.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.button2.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.button2.BackColor = System.Drawing.Color.Navy;
             this.button2.FlatAppearance.BorderSize = 0;
@@ -156,7 +152,7 @@
             this.textBox4.Location = new System.Drawing.Point(627, 197);
             this.textBox4.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.textBox4.Name = "textBox4";
-            this.textBox4.Size = new System.Drawing.Size(127, 29);
+            this.textBox4.Size = new System.Drawing.Size(127, 24);
             this.textBox4.TabIndex = 33;
             // 
             // label1
@@ -166,7 +162,7 @@
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.Location = new System.Drawing.Point(27, 49);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(112, 24);
+            this.label1.Size = new System.Drawing.Size(84, 18);
             this.label1.TabIndex = 18;
             this.label1.Text = "Tên chủ xe:";
             // 
@@ -177,7 +173,7 @@
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label3.Location = new System.Drawing.Point(507, 49);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(78, 24);
+            this.label3.Size = new System.Drawing.Size(62, 18);
             this.label3.TabIndex = 19;
             this.label3.Text = "Biển số:";
             // 
@@ -207,7 +203,7 @@
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label4.Location = new System.Drawing.Point(32, 98);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(81, 24);
+            this.label4.Size = new System.Drawing.Size(61, 18);
             this.label4.TabIndex = 20;
             this.label4.Text = "Hiệu xe:";
             // 
@@ -236,7 +232,7 @@
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label5.Location = new System.Drawing.Point(32, 148);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(72, 24);
+            this.label5.Size = new System.Drawing.Size(57, 18);
             this.label5.TabIndex = 21;
             this.label5.Text = "Địa chỉ:";
             // 
@@ -247,7 +243,7 @@
             this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label6.Location = new System.Drawing.Point(507, 197);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(99, 24);
+            this.label6.Size = new System.Drawing.Size(78, 18);
             this.label6.TabIndex = 22;
             this.label6.Text = "Điện thoại:";
             // 
@@ -259,7 +255,7 @@
             this.dateTimePicker1.Location = new System.Drawing.Point(187, 197);
             this.dateTimePicker1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.dateTimePicker1.Name = "dateTimePicker1";
-            this.dateTimePicker1.Size = new System.Drawing.Size(132, 26);
+            this.dateTimePicker1.Size = new System.Drawing.Size(132, 22);
             this.dateTimePicker1.TabIndex = 27;
             // 
             // label9
@@ -269,7 +265,7 @@
             this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label9.Location = new System.Drawing.Point(32, 197);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(142, 24);
+            this.label9.Size = new System.Drawing.Size(109, 18);
             this.label9.TabIndex = 23;
             this.label9.Text = "Ngày tiếp nhận:";
             // 
@@ -280,7 +276,7 @@
             this.textBox2.Location = new System.Drawing.Point(187, 49);
             this.textBox2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(276, 29);
+            this.textBox2.Size = new System.Drawing.Size(276, 24);
             this.textBox2.TabIndex = 24;
             // 
             // textBox3
@@ -290,7 +286,7 @@
             this.textBox3.Location = new System.Drawing.Point(187, 148);
             this.textBox3.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(581, 29);
+            this.textBox3.Size = new System.Drawing.Size(581, 24);
             this.textBox3.TabIndex = 26;
             // 
             // comboBox1
@@ -314,15 +310,14 @@
             this.comboBox1.Location = new System.Drawing.Point(187, 98);
             this.comboBox1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(152, 32);
+            this.comboBox1.Size = new System.Drawing.Size(152, 26);
             this.comboBox1.Sorted = true;
             this.comboBox1.TabIndex = 25;
             this.comboBox1.Text = "Ford";
             // 
             // button3
             // 
-            this.button3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.button3.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.button3.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.button3.BackColor = System.Drawing.Color.Navy;
             this.button3.FlatAppearance.BorderSize = 0;

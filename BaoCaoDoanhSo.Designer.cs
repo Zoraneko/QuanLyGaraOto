@@ -61,7 +61,7 @@
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.Location = new System.Drawing.Point(27, 49);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(70, 24);
+            this.label1.Size = new System.Drawing.Size(53, 18);
             this.label1.TabIndex = 0;
             this.label1.Text = "Tháng:";
             // 
@@ -73,8 +73,9 @@
             this.dateTimePicker1.Location = new System.Drawing.Point(103, 46);
             this.dateTimePicker1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.dateTimePicker1.Name = "dateTimePicker1";
-            this.dateTimePicker1.Size = new System.Drawing.Size(159, 29);
+            this.dateTimePicker1.Size = new System.Drawing.Size(159, 24);
             this.dateTimePicker1.TabIndex = 1;
+            this.dateTimePicker1.ValueChanged += new System.EventHandler(this.dateTimePicker1_ValueChanged);
             // 
             // label2
             // 
@@ -83,7 +84,7 @@
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.Location = new System.Drawing.Point(373, 49);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(150, 24);
+            this.label2.Size = new System.Drawing.Size(115, 18);
             this.label2.TabIndex = 2;
             this.label2.Text = "Tổng doanh thu:";
             // 
@@ -94,7 +95,7 @@
             this.textBox1.Location = new System.Drawing.Point(532, 46);
             this.textBox1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(149, 29);
+            this.textBox1.Size = new System.Drawing.Size(149, 24);
             this.textBox1.TabIndex = 3;
             // 
             // dataGridView1
