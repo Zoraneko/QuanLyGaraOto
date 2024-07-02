@@ -31,6 +31,7 @@ namespace QuanLyGara
 
         private void BaoCaoDoanhSo_Load(object sender, EventArgs e)
         {
+           
             textBox6.Text = this.ten;
             textBox5.Text = this.vaitro;
         }
