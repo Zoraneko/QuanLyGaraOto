@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.SQLite;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -14,6 +15,7 @@ namespace QuanLyGara
     {
         public string ten;
         public string vaitro;
+        string str = string.Format(@"Data Source={0}\db.db;Version=3;", Application.StartupPath);
         public BaoCaoTon()
         {
             InitializeComponent();
@@ -28,8 +30,22 @@ namespace QuanLyGara
         {
             textBox6.Text = this.ten;
             textBox5.Text = this.vaitro;
+            dateTimePicker1.CustomFormat = "dd/MM/yyyy";
+            LoadDatabase();
         }
 
+        void LoadDatabase()
+        {
+            string query = "SELECT * FROM BAOCAOTON";
+            using (SQLiteConnection con = new SQLiteConnection(str))
+            {
+                con.Open();
+                SQLiteDataAdapter da = new SQLiteDataAdapter(query, con);
+                DataTable dt = new DataTable();
+                da.Fill(dt);
+                dataGridView1.DataSource = dt;
+            }
+        }
         private void button8_Click(object sender, EventArgs e)
         {
             DialogResult = DialogResult.Yes;
@@ -77,6 +93,18 @@ namespace QuanLyGara
                     e.Cancel = true;
                     MessageBox.Show("Vui lòng đăng xuất trước khi thoát.", "Quản Lý Gara", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     break;
+            }
+        }
+
+        private void button7_Click(object sender, EventArgs e)
+        {
+            if (vaitro == "admin")
+            {
+                ThayDoiQuyDinh tdqd = new ThayDoiQuyDinh();
+                this.Hide();
+                tdqd.ShowDialog();
+                tdqd = null;
+                this.Show();
             }
         }
     }

@@ -25,11 +25,12 @@ namespace QuanLyGara
             textBox6.Text = this.ten;
             textBox5.Text = this.vaitro;
             dateTimePicker1.CustomFormat = "dd/MM/yyyy";
+            LoadDatabase();
         }
 
         void LoadDatabase()
         {
-            string query = "SELECT * FROM XE";
+            string query = "SELECT * FROM TIEPNHANXESUA";
             using (SQLiteConnection con = new SQLiteConnection(str))
             {
                 con.Open();
@@ -94,7 +95,7 @@ namespace QuanLyGara
                 this.Hide();
                 PhieuSuaChua phieuSuaChua = new PhieuSuaChua();
                 phieuSuaChua.bienSo = textBox2.Text;
-                phieuSuaChua.ngaSuaChua = dateTimePicker1.Text.ToString();
+                phieuSuaChua.ngaySuaChua = dateTimePicker1.Text.ToString();
                 phieuSuaChua.ShowDialog();
                 phieuSuaChua = null;
                 this.Show();
@@ -137,7 +138,14 @@ namespace QuanLyGara
 
         private void button7_Click(object sender, EventArgs e)
         {
-
+            if (vaitro == "admin")
+            {
+                ThayDoiQuyDinh tdqd = new ThayDoiQuyDinh();
+                this.Hide();
+                tdqd.ShowDialog();
+                tdqd = null;
+                this.Show();
+            }
         }
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)

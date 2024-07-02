@@ -20,10 +20,10 @@ namespace QuanLyGara
         }
 
         public string bienSo;
-        public string ngaSuaChua;
+        public string ngaySuaChua;
 
         // duong dan csdl
-        string str = string.Format(@"Data Source={0}\QLGR.db;Version = 3;",Application.StartupPath);
+        string str = string.Format(@"Data Source={0}\db.db;Version = 3;",Application.StartupPath);
         
         
         
@@ -81,13 +81,21 @@ namespace QuanLyGara
         private void PhieuSuaChua_Load(object sender, EventArgs e)
         {
             textBox1.Text = bienSo;
-            textBox2.Text = ngaSuaChua;
-            loadDatabase();
+            textBox2.Text = ngaySuaChua;
+            LoadDatabase();
         }
 
-        private void loadDatabase()
+        private void LoadDatabase()
         {
-           
+            string query = "SELECT * FROM PHIEUSUACHUA";
+            using (SQLiteConnection con = new SQLiteConnection(str))
+            {
+                con.Open();
+                SQLiteDataAdapter da = new SQLiteDataAdapter(query, con);
+                DataTable dt = new DataTable();
+                da.Fill(dt);
+                dataGridView1.DataSource = dt;
+            }
         }
     }
 }

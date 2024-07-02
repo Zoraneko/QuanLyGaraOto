@@ -124,11 +124,14 @@ namespace QuanLyGara
 
         private void button5_Click(object sender, EventArgs e)
         {
-            ThayDoiQuyDinh tdqd = new ThayDoiQuyDinh();
-            this.Hide();
-            tdqd.ShowDialog();
-            tdqd = null;
-            this.Show();
+            if(vaitro == "admin")
+            {
+                ThayDoiQuyDinh tdqd = new ThayDoiQuyDinh();
+                this.Hide();
+                tdqd.ShowDialog();
+                tdqd = null;
+                this.Show();
+            }
         }
 
         private void ManHinhChinh_FormClosing(object sender, FormClosingEventArgs e)
