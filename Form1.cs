@@ -37,7 +37,20 @@ namespace QuanLyGara
                 SQLiteDataAdapter da = new SQLiteDataAdapter(query, con);
                 DataTable dt = new DataTable();
                 da.Fill(dt);
-                dataGridView1.DataSource = dt;  
+                dataGridView1.DataSource = dt;
+                // sửa header datagridview sang tiếng việt
+                dataGridView1.Columns[0].HeaderText = "Tên chủ xe";
+                dataGridView1.Columns[1].HeaderText = "Biển số";
+                dataGridView1.Columns[2].HeaderText = "Hiệu xe";
+                dataGridView1.Columns[3].HeaderText = "Địa chỉ";
+                dataGridView1.Columns[4].HeaderText = "Điện thoại";
+                dataGridView1.Columns[5].HeaderText = "Ngày tiếp nhận";
+                dataGridView1.Columns[0].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+                dataGridView1.Columns[1].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+                dataGridView1.Columns[2].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+                dataGridView1.Columns[3].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+                dataGridView1.Columns[4].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+                dataGridView1.Columns[5].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             }
         }
         private void textBox4_KeyPress(object sender, KeyPressEventArgs e) // chỉ cho nhập số
@@ -63,7 +76,7 @@ namespace QuanLyGara
                 int result = cmd.ExecuteNonQuery();
                 if(result == 1)
                 {
-                    MessageBox.Show("Successfull");
+                    MessageBox.Show("Thành công");
                     LoadDatabase();
                 }
             }
@@ -182,7 +195,8 @@ namespace QuanLyGara
                 comboBox1.Text = row.Cells[2].Value.ToString();
                 textBox3.Text = row.Cells[3].Value.ToString();
                 textBox4.Text = row.Cells[4].Value.ToString();
-
+                dateTimePicker1.Value = DateTime.ParseExact(row.Cells[5].Value.ToString(), "dd/MM/yyyy", System.Globalization.CultureInfo.InvariantCulture);
+               
             }
         }
     }

@@ -259,11 +259,12 @@
             this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dataGridView1.Size = new System.Drawing.Size(783, 350);
             this.dataGridView1.TabIndex = 19;
+            this.dataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellClick);
             // 
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(489, 99);
+            this.label6.Location = new System.Drawing.Point(481, 96);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(137, 29);
             this.label6.TabIndex = 20;
@@ -296,7 +297,7 @@
             "90000"});
             this.comboBox2.Location = new System.Drawing.Point(618, 94);
             this.comboBox2.Name = "comboBox2";
-            this.comboBox2.Size = new System.Drawing.Size(141, 37);
+            this.comboBox2.Size = new System.Drawing.Size(151, 37);
             this.comboBox2.Sorted = true;
             this.comboBox2.TabIndex = 21;
             this.comboBox2.Text = "10000";

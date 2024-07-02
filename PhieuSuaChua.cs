@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Data.SQLite;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace QuanLyGara
 {
@@ -21,54 +22,58 @@ namespace QuanLyGara
 
         public string bienSo;
         public string ngaySuaChua;
-
         // duong dan csdl
         string str = string.Format(@"Data Source={0}\db.db;Version = 3;",Application.StartupPath);
-        
-        
-        
-
+                      
         private void button1_Click(object sender, EventArgs e)// nút thêm
         {
-            string str1 = this.textBox3.Text;
-            string str2 = this.comboBox1.Text;
-            string str3 = this.numericUpDown1.Value.ToString();
+            string noidung = this.textBox3.Text;
+            string vattu = this.comboBox1.Text;
+            int soluong = int.Parse(this.numericUpDown1.Value.ToString());
             int donGia = 0;
-            int tienCong = 0;
+            int tienCong = int.Parse(this.comboBox2.Text);
             int thanhTien = 0;
-            // cập nhật đơn giá, tien cong tu DB
-            thanhTien = donGia * int.Parse(numericUpDown1.Value.ToString()) + tienCong;
-           
-            //
-            /*if (str1 != "" && str2 != "")
+            // cập nhật đơn giá tu DB
+            thanhTien = donGia * soluong + tienCong;
+
+            string query = String.Format("INSERT INTO PHIEUSUACHUA (STT,BienSo,NoiDung,NgaySua,TenVatTu,DonGia,SoLuong,TienCong,ThanhTien) VALUES(null,'{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}');"
+                , textBox1.Text, noidung, textBox2.Text, comboBox1.Text,donGia, soluong, tienCong, thanhTien);
+            Execute(query);
+        }
+
+        void Execute(string query)
+        {
+            using (SQLiteConnection con = new SQLiteConnection(str))
             {
-                ListViewItem item = new ListViewItem(new[] { (listView1.Items.Count + 1).ToString(), str1, str2, str3, donGia.ToString(), tienCong.ToString(), thanhTien.ToString() });
-                listView1.Items.Add(item);
-            }*/
+                con.Open();
+                SQLiteCommand cmd = new SQLiteCommand(query, con);
+                int result = cmd.ExecuteNonQuery();
+                if (result == 1)
+                {
+                    MessageBox.Show("Thành công");
+                    LoadDatabase();
+                }
+            }
+
         }
 
         private void button2_Click(object sender, EventArgs e) //xóa
         {
-            /*if (listView1.SelectedItems.Count > 0)
-            {
-                listView1.Items.Remove(listView1.SelectedItems[0]);
-            }*/
-
-            // cap nhat lai STT...
+            string query = String.Format("DELETE FROM PHIEUSUACHUA WHERE NoiDung = '{0}' ;",textBox3.Text.ToString());
+            Execute(query);
         }
 
         private void button3_Click(object sender, EventArgs e)//sửa
         {
-            /*if (listView1.SelectedItems.Count > 0)
+            int donGia = 0;// chưa tính đơn giá
+            int soLuong = int.Parse(numericUpDown1.Value.ToString());
+            int tienCong = int.Parse(comboBox2.Text.ToString());
+            int thanhTien = donGia * soLuong + tienCong;// chưa tính tiền
+            if(textBox3.Text.ToString() != "")
             {
-                listView1.SelectedItems[0].SubItems[1].Text = textBox3.Text.ToString();
-                listView1.SelectedItems[0].SubItems[2].Text = comboBox1.Text.ToString();
-                listView1.SelectedItems[0].SubItems[3].Text = numericUpDown1.Value.ToString();
-                
-                // sửa lại đơn giá, tien cong, thanh tien
-
-                //
-            }*/
+                string query = String.Format("UPDATE PHIEUSUACHUA SET TenVatTu = '{0}',DonGia = '{1}',SoLuong = '{2}',TienCong = '{3}',ThanhTien = '{4}' WHERE NoiDung = '{5}'; ",comboBox1.Text.ToString(),donGia,soLuong,tienCong,thanhTien,textBox3.Text);
+                Execute(query);
+            }
         }
 
         private void button4_Click(object sender, EventArgs e)//hoàn thành
@@ -89,7 +94,7 @@ namespace QuanLyGara
        
         private void LoadDatabase()
         {
-            string query = "SELECT * FROM PHIEUSUACHUA";
+            string query = String.Format("SELECT * FROM PHIEUSUACHUA WHERE BienSo =  '{0}' AND NgaySua = '{1}';", bienSo, ngaySuaChua);
             using (SQLiteConnection con = new SQLiteConnection(str))
             {
                 con.Open();
@@ -111,6 +116,17 @@ namespace QuanLyGara
                 da.Fill(dt);
                 comboBox1.DataSource = dt;
                 comboBox1.DisplayMember = "TenVatTu";
+            }
+        }
+
+        private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            foreach (DataGridViewRow row in dataGridView1.SelectedRows)
+            {                         
+                textBox3.Text = row.Cells[2].Value.ToString();
+                comboBox1.Text = row.Cells[4].Value.ToString();
+                numericUpDown1.Value = int.Parse(row.Cells[6].Value.ToString());
+                comboBox2.Text = row.Cells[7].Value.ToString();
             }
         }
     }
