@@ -30,7 +30,7 @@ namespace QuanLyGara
 
         void LoadDatabase()
         {
-            string query = "SELECT * FROM TIEPNHANXESUA";
+            string query = "SELECT TenChuXe,BienSo,HieuXe,DiaChi,DienThoai,NgayTiepNhan FROM TIEPNHANXESUA";
             using (SQLiteConnection con = new SQLiteConnection(str))
             {
                 con.Open();
@@ -63,7 +63,7 @@ namespace QuanLyGara
         private void button1_Click(object sender, EventArgs e) // thêm
         {
             string query = String.Format("INSERT INTO TIEPNHANXESUA (TenChuXe,BienSo,HieuXe,DiaChi,DienThoai,NgayTiepNhan) VALUES('{0}','{1}','{2}','{3}','{4}','{5}');"
-                ,textBox1.Text,textBox2.Text,comboBox1.Text,textBox3.Text,int.Parse(textBox4.Text),dateTimePicker1.Value.ToString("dd/MM/yyyy"));
+                ,textBox1.Text,textBox2.Text,comboBox1.Text,textBox3.Text,textBox4.Text,dateTimePicker1.Value.ToString("dd/MM/yyyy"));
             Execute(query);
         }
        
@@ -92,7 +92,7 @@ namespace QuanLyGara
         private void button3_Click(object sender, EventArgs e) // sửa
         {
             string query = String.Format("UPDATE TIEPNHANXESUA SET TenChuXe='{0}',HieuXe='{2}',DiaChi='{3}',DienThoai='{4}',NgayTiepNhan='{5}' WHERE BienSo='{1}';"
-                , textBox1.Text, textBox2.Text, comboBox1.Text, textBox3.Text, int.Parse(textBox4.Text), dateTimePicker1.Value.ToString("dd/MM/yyyy"));
+                , textBox1.Text, textBox2.Text, comboBox1.Text, textBox3.Text,textBox4.Text, dateTimePicker1.Value.ToString("dd/MM/yyyy"));
             Execute(query);
         }
 
