@@ -39,9 +39,7 @@ namespace QuanLyGara
             p1.bienSo = dataGridView1.SelectedRows[0].Cells[0].Value.ToString();
             p1.ShowDialog();
             p1 = null;
-            this.Show();
-            
-                
+            this.Show();                            
         }
 
         private void button3_Click(object sender, EventArgs e)
@@ -63,23 +61,25 @@ namespace QuanLyGara
 
         void LoadDatabase()
         {
-            string query = "SELECT PHIEUSUACHUA.BienSo,HieuXe,TenChuXe,SUM(ThanhTien) FROM PHIEUSUACHUA,TIEPNHANXESUA WHERE PHIEUSUACHUA.BienSo = TIEPNHANXESUA.BienSo GROUP BY PHIEUSUACHUA.BienSo; ";
+            string query = "SELECT PHIEUSUACHUA.BienSo,HieuXe,TenChuXe,SUM(ThanhTien) AS TienNo FROM PHIEUSUACHUA,TIEPNHANXESUA WHERE PHIEUSUACHUA.BienSo = TIEPNHANXESUA.BienSo AND PHIEUSUACHUA.NgaySua = TIEPNHANXESUA.NgayTiepNhan  GROUP BY TIEPNHANXESUA.BienSo; ";
             using (SQLiteConnection con = new SQLiteConnection(str))
             {
                 con.Open();
                 SQLiteDataAdapter da = new SQLiteDataAdapter(query, con);
                 DataTable dt = new DataTable();
-                da.Fill(dt);
+                da.Fill(dt);               
                 dataGridView1.DataSource = dt;
-                dataGridView1.Columns[0].HeaderText = "Biển số";
-                dataGridView1.Columns[1].HeaderText = "Hiệu xe";
-                dataGridView1.Columns[2].HeaderText = "Tên chủ xe";
-                dataGridView1.Columns[3].HeaderText = "Tiền nợ";
-                dataGridView1.Columns[0].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-                dataGridView1.Columns[1].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-                dataGridView1.Columns[2].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-                dataGridView1.Columns[3].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             }
+            
+            dataGridView1.Columns[0].HeaderText = "Biển số";
+            dataGridView1.Columns[1].HeaderText = "Hiệu xe";
+            dataGridView1.Columns[2].HeaderText = "Tên chủ xe";
+            dataGridView1.Columns[3].HeaderText = "Tiền nợ";
+            dataGridView1.Columns[0].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+            dataGridView1.Columns[1].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+            dataGridView1.Columns[2].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+            dataGridView1.Columns[3].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            
         }
 
         private void button8_Click(object sender, EventArgs e)
