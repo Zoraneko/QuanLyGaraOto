@@ -79,8 +79,32 @@ namespace QuanLyGara
         }
 
         private void button4_Click(object sender, EventArgs e)//hoàn thành
-        {   
+        {
             
+            string query = "SELECT PHIEUSUACHUA.BienSo,HieuXe,TenChuXe,SUM(ThanhTien) AS TienNo FROM PHIEUSUACHUA,TIEPNHANXESUA WHERE PHIEUSUACHUA.BienSo = TIEPNHANXESUA.BienSo AND PHIEUSUACHUA.NgaySua = TIEPNHANXESUA.NgayTiepNhan  GROUP BY TIEPNHANXESUA.BienSo; ";
+            using (SQLiteConnection con = new SQLiteConnection(str))
+            {
+                con.Open();
+                SQLiteDataAdapter da = new SQLiteDataAdapter(query, con);
+                DataTable dt = new DataTable();
+                da.Fill(dt);
+                
+                dataGridView2.DataSource = dt;
+
+                foreach (DataGridViewRow row in dataGridView2.Rows)
+                {
+                    string query1 = String.Format("INSERT OR REPLACE INTO XE(BienSo,HieuXe,HoTenChuXe,TienNo) VALUES('{0}','{1}','{2}','{3}');",
+                        row.Cells[0].Value.ToString(), row.Cells[1].Value.ToString(), row.Cells[2].Value.ToString(), int.Parse(row.Cells[3].Value.ToString()));
+                    using (SQLiteConnection con1 = new SQLiteConnection(str))
+                    {
+                        con1.Open();
+                        SQLiteCommand cmd = new SQLiteCommand(query1, con1);
+                        int result = cmd.ExecuteNonQuery();
+                       
+                    }
+                }    
+                        
+            }
             this.Close();
         }
 

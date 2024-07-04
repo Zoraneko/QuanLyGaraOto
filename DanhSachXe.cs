@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.Entity.Core.Common.CommandTrees.ExpressionBuilder;
 using System.Data.SQLite;
 using System.Drawing;
 using System.Linq;
@@ -39,7 +40,8 @@ namespace QuanLyGara
             p1.bienSo = dataGridView1.SelectedRows[0].Cells[0].Value.ToString();
             p1.ShowDialog();
             p1 = null;
-            this.Show();                            
+            this.Show();
+            LoadDatabase();
         }
 
         private void button3_Click(object sender, EventArgs e)
@@ -61,7 +63,7 @@ namespace QuanLyGara
 
         void LoadDatabase()
         {
-            string query = "SELECT PHIEUSUACHUA.BienSo,HieuXe,TenChuXe,SUM(ThanhTien) AS TienNo FROM PHIEUSUACHUA,TIEPNHANXESUA WHERE PHIEUSUACHUA.BienSo = TIEPNHANXESUA.BienSo AND PHIEUSUACHUA.NgaySua = TIEPNHANXESUA.NgayTiepNhan  GROUP BY TIEPNHANXESUA.BienSo; ";
+            string query = "SELECT XE.BienSo,HieuXe,HoTenChuXe,TienNo  FROM XE ; ";
             using (SQLiteConnection con = new SQLiteConnection(str))
             {
                 con.Open();
@@ -69,6 +71,10 @@ namespace QuanLyGara
                 DataTable dt = new DataTable();
                 da.Fill(dt);               
                 dataGridView1.DataSource = dt;
+            }
+            foreach ( DataGridViewRow row in dataGridView1.Rows )
+            {
+                row.Cells[3].Value = (int.Parse(row.Cells[3].Value.ToString())-GetHoaDon(row.Cells[0].Value.ToString().ToString()));    
             }
             
             dataGridView1.Columns[0].HeaderText = "Biển số";
@@ -79,9 +85,23 @@ namespace QuanLyGara
             dataGridView1.Columns[1].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
             dataGridView1.Columns[2].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
             dataGridView1.Columns[3].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            
         }
 
+        int GetHoaDon(string bienso)
+        {
+            int hoadon = 0;
+            string query = String.Format("SELECT SUM(SoTienThu) FROM HOADON WHERE BienSo = '{0}';", bienso);
+            using (SQLiteConnection con = new SQLiteConnection(str))
+            {
+                con.Open();
+                SQLiteDataAdapter da = new SQLiteDataAdapter(query, con);
+                DataTable dt = new DataTable();
+                da.Fill(dt);
+                if(dt.Rows[0][0].ToString()!="")
+                hoadon = int.Parse(dt.Rows[0][0].ToString()); ;
+            }
+            return hoadon;
+        }
         private void button8_Click(object sender, EventArgs e)
         {
             DialogResult = DialogResult.Yes;

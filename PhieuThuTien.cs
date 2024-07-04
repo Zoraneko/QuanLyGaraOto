@@ -56,7 +56,7 @@ namespace QuanLyGara
                 int result = cmd.ExecuteNonQuery();
                 if (result == 1)
                 {
-                    MessageBox.Show("Thành công");                
+                    MessageBox.Show("Thanh toán thành công");                
                 }
             }
             this.Close();
