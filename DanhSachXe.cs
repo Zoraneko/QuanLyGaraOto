@@ -74,7 +74,8 @@ namespace QuanLyGara
             }
             foreach ( DataGridViewRow row in dataGridView1.Rows )
             {
-                row.Cells[3].Value = (int.Parse(row.Cells[3].Value.ToString())-GetHoaDon(row.Cells[0].Value.ToString().ToString()));    
+                //BUG
+                row.Cells["TienNo"].Value = (int.Parse(row.Cells["TienNo"].Value.ToString())-GetHoaDon(row.Cells["BienSo"].Value.ToString())).ToString();    
             }
             
             dataGridView1.Columns[0].HeaderText = "Biển số";

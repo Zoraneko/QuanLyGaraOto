@@ -24,7 +24,11 @@ namespace QuanLyGara
         public string ngaySuaChua;
         // duong dan csdl
         string str = string.Format(@"Data Source={0}\db.db;Version = 3;",Application.StartupPath);
-                      
+        // string để giữ tạm thời string trc khi sửa
+        string last_vattu_chosen;
+        int last_soluong;
+
+
         private void button1_Click(object sender, EventArgs e)// nút thêm
         {
             string noidung = this.textBox3.Text;
@@ -39,6 +43,13 @@ namespace QuanLyGara
             string query = String.Format("INSERT INTO PHIEUSUACHUA (STT,BienSo,NoiDung,NgaySua,TenVatTu,DonGia,SoLuong,TienCong,ThanhTien) VALUES(null,'{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}');"
                 , textBox1.Text, noidung, textBox2.Text, comboBox1.Text,donGia, soluong, tienCong, thanhTien);
             Execute(query);
+
+            // Query cho Bảng Vật tư
+            string queryVattu1 = String.Format("UPDATE BAOCAOTON SET PhatSinh = PhatSinh + '{0}' WHERE VatTuPhuTung = '{1}';", soluong, comboBox1.Text);
+            string queryVattu2 = String.Format("UPDATE BAOCAOTON SET TonCuoi = TonDau - PhatSinh WHERE VatTuPhuTung = '{0}';", comboBox1.Text);
+            Execute(queryVattu1);
+            Execute(queryVattu2);
+
         }
 
         void Execute(string query)
@@ -61,6 +72,11 @@ namespace QuanLyGara
         {
             string query = String.Format("DELETE FROM PHIEUSUACHUA WHERE NoiDung = '{0}' ;",textBox3.Text.ToString());
             Execute(query);
+            // Query cho Bảng Vật tư
+            string queryVattu1 = String.Format("UPDATE BAOCAOTON SET PhatSinh = PhatSinh - '{0}' WHERE VatTuPhuTung = '{1}';", int.Parse(this.numericUpDown1.Value.ToString()), comboBox1.Text);
+            string queryVattu2 = String.Format("UPDATE BAOCAOTON SET TonCuoi = TonDau - PhatSinh WHERE VatTuPhuTung = '{0}';", comboBox1.Text);
+            Execute(queryVattu1);
+            Execute(queryVattu2);
         }
 
         private void button3_Click(object sender, EventArgs e)//sửa
@@ -75,6 +91,19 @@ namespace QuanLyGara
             {
                 string query = String.Format("UPDATE PHIEUSUACHUA SET TenVatTu = '{0}',DonGia = '{1}',SoLuong = '{2}',TienCong = '{3}',ThanhTien = '{4}' WHERE NoiDung = '{5}'; ",comboBox1.Text.ToString(),donGia,soLuong,tienCong,thanhTien,textBox3.Text);
                 Execute(query);
+                // Query cho Bảng Vật tư
+                // Dòng cũ - sửa số lượng
+                string queryVattu1 = String.Format("UPDATE BAOCAOTON SET PhatSinh = PhatSinh - '{0}' WHERE VatTuPhuTung = '{1}';", last_soluong, last_vattu_chosen);
+                string queryVattu2 = String.Format("UPDATE BAOCAOTON SET TonCuoi = TonDau - PhatSinh WHERE VatTuPhuTung = '{0}';", last_vattu_chosen);
+                Execute(queryVattu1);
+                Execute(queryVattu2);
+
+                // Dòng mới - sửa số lượng
+                string queryVattu3 = String.Format("UPDATE BAOCAOTON SET PhatSinh = PhatSinh + '{0}' WHERE VatTuPhuTung = '{1}';", int.Parse(this.numericUpDown1.Value.ToString()), comboBox1.Text);
+                string queryVattu4 = String.Format("UPDATE BAOCAOTON SET TonCuoi = TonDau - PhatSinh WHERE VatTuPhuTung = '{0}';", comboBox1.Text);
+                Execute(queryVattu3);
+                Execute(queryVattu4);
+
             }
         }
 
@@ -189,6 +218,18 @@ namespace QuanLyGara
                 donGia = int.Parse(dt.Rows[0][0].ToString()); ;
             }
             return donGia;
+        }
+
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if(dataGridView1 != null&& dataGridView1.RowCount > 1) 
+                last_vattu_chosen = dataGridView1.SelectedRows[0].Cells["TenVatTu"].Value.ToString();
+        }
+
+        private void numericUpDown1_ValueChanged(object sender, EventArgs e)
+        {
+            if (dataGridView1 != null && dataGridView1.RowCount > 1)
+                last_soluong = int.Parse(dataGridView1.SelectedRows[0].Cells["SoLuong"].Value.ToString());
         }
     }
 }
