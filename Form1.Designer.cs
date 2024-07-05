@@ -169,13 +169,13 @@
             this.comboBox1.Items.AddRange(new object[] {
             "Chevrolet",
             "Ford",
-            "HonDa",
+            "Honda",
             "Hyundai",
             "Isuzu",
             "Kia",
             "Lexus",
             "Mitsubishi",
-            "SuZuKi",
+            "SusuKi",
             "Toyota"});
             this.comboBox1.Location = new System.Drawing.Point(130, 80);
             this.comboBox1.Margin = new System.Windows.Forms.Padding(2);

@@ -70,35 +70,59 @@ namespace QuanLyGara
         }
 
         private void BaoCaoDoanhSo_Load(object sender, EventArgs e)
-        {           
+        {
             textBox6.Text = this.ten;
             textBox5.Text = this.vaitro;
             dateTimePicker1.CustomFormat = "dd/MM/yyyy";
             LoadData();
+            
+
         }
 
         void LoadData()
-        {           
-                string query = "SELECT Thang, HieuXe, SoLuotSuaChua, ThanhTien, TiLe FROM DOANHSO";
-                using (SQLiteConnection con = new SQLiteConnection(str))
+        {
+            // Tính toán và load dữ liệu mới vào datagridview
+            string query = "SELECT HD.NgayThuTien AS Thang, TNXS.HieuXe, COUNT(*) AS SoLuotSuaChua, SUM(HD.SoTienThu) AS ThanhTien " +
+            "FROM HOADON HD " +
+            "JOIN TIEPNHANXESUA TNXS ON HD.BienSo=TNXS.BienSo " +
+            "GROUP BY TNXS.HieuXe";
+            using (SQLiteConnection con = new SQLiteConnection(str))
+            {
+                con.Open();
+                SQLiteDataAdapter da = new SQLiteDataAdapter(query, con);
+                DataTable dt = new DataTable();
+                da.Fill(dt);
+                dataGridView1.DataSource = dt;
+            }
+            // Tạo mới cột tỉ lệ 
+            if (!dataGridView1.Columns.Contains("Tile"))
+            {
+
+                dataGridView1.Columns.Add("TiLe", "TiLe");
+            }
+            // sửa header datagridview sang tiếng việt
+            dataGridView1.Columns[0].HeaderText = "Tháng";
+            dataGridView1.Columns[1].HeaderText = "Hiệu xe";
+            dataGridView1.Columns[2].HeaderText = "Số lượt sửa chữa";
+            dataGridView1.Columns[3].HeaderText = "Thành tiền";
+            dataGridView1.Columns[4].HeaderText = "Tỉ lệ";
+            dataGridView1.Columns[0].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+            dataGridView1.Columns[1].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+            dataGridView1.Columns[2].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+            dataGridView1.Columns[3].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+            dataGridView1.Columns[4].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            // Insert dữ liệu datagridview vào lại database DOANHSO để tính toán tỉ lệ sau này
+            using (SQLiteConnection con1 = new SQLiteConnection(str))
+            {
+                foreach (DataGridViewRow row in this.dataGridView1.Rows)
                 {
-                    con.Open();
-                    SQLiteDataAdapter da = new SQLiteDataAdapter(query, con);
-                    DataTable dt = new DataTable();
-                    da.Fill(dt);
-                    dataGridView1.DataSource = dt;
+                    string update = String.Format("UPDATE DOANHSO SET SoLuotSuaChua = '{0}', ThanhTien = '{1}' WHERE HieuXe = '{2}' AND Thang = '{3}';", int.Parse(row.Cells["SoLuotSuaChua"].Value.ToString()), int.Parse(row.Cells["ThanhTien"].Value.ToString()), row.Cells["HieuXe"].Value, int.Parse(row.Cells["Thang"].Value.ToString().Substring(3, 2)));
+                    con1.Open();
+                    SQLiteCommand cmd = new SQLiteCommand(update, con1);
+                    int a = cmd.ExecuteNonQuery();
                 }
-                // sửa header datagridview sang tiếng việt
-                dataGridView1.Columns[0].HeaderText = "Tháng";
-                dataGridView1.Columns[1].HeaderText = "Hiệu xe";
-                dataGridView1.Columns[2].HeaderText = "Số lượt sửa chữa";
-                dataGridView1.Columns[3].HeaderText = "Thành tiền";
-                dataGridView1.Columns[4].HeaderText = "Tỉ lệ";
-                dataGridView1.Columns[0].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-                dataGridView1.Columns[1].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-                dataGridView1.Columns[2].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-                dataGridView1.Columns[3].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-                dataGridView1.Columns[4].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            }
+            
         }
 
         private void button8_Click(object sender, EventArgs e)
@@ -163,15 +187,20 @@ namespace QuanLyGara
             }
         }
 
-        private void dateTimePicker1_ValueChanged(object sender, EventArgs e)
+        private void dateTimePicker1_ValueChanged(object sender, EventArgs e) // CODE BỊ BUG, CỨU BÉ, NGUYÊN ĐOẠN CCODE Ở DƯỚI LUÔN Á
         {
+            
             // Lấy thông số: tháng
-            string thang = dateTimePicker1.Value.Month.ToString();
+            string thang = dateTimePicker1.Value.Month.ToString("D2");
+            
 
             // Lệnh query để lọc ra database và chỉ lấy các cột cần thiết tương ứng với tháng
-            string query = "SELECT Thang, HieuXe, SoLuotSuaChua,ThanhTien FROM DOANHSO WHERE Thang = " + thang;
-
-            // Kết nối database
+            // Tính toán và load dữ liệu mới vào datagridview
+            string query = String.Format("SELECT SUBSTRING(HD.  NgayThuTien, 4, 7) AS Thang, TNXS.HieuXe, COUNT(*) AS SoLuotSuaChua, SUM(HD.SoTienThu) AS ThanhTien " +
+            "FROM HOADON HD " +
+            "JOIN TIEPNHANXESUA TNXS ON HD.BienSo=TNXS.BienSo " +
+            "WHERE SUBSTRING(Thang, 4, 2) = '{0}' " +
+            "GROUP BY SUBSTRING(HD.NgayThuTien, 4, 7), TNXS.HieuXe;", thang);
             using (SQLiteConnection con = new SQLiteConnection(str))
             {
                 con.Open();
@@ -181,14 +210,9 @@ namespace QuanLyGara
                 dataGridView1.DataSource = dt;
             }
 
-            // Tạo mới cột tỉ lệ 
-            if (!dataGridView1.Columns.Contains("Tile"))
-            {
-
-                dataGridView1.Columns.Add("TiLe", "TiLe");
-            }
+            
             // Trong trường hợp datagridView không rỗng
-            int tien = 0;
+            /*int tien = 0;
             if (dataGridView1 != null && dataGridView1.RowCount>1)
             {
                 // vòng lặp để tính tiền
@@ -220,7 +244,7 @@ namespace QuanLyGara
                         throw;
                     }
                 }
-            }
+            }*/
             
         }
     }
