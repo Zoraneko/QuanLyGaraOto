@@ -28,7 +28,7 @@ namespace QuanLyGara
 
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void button1_Click(object sender, EventArgs e) // Button IN Báo cáo
         {
             // Kiểm tra xem dataGridView có rỗng không
             if (dataGridView1 != null && dataGridView1.RowCount > 1)
@@ -79,7 +79,7 @@ namespace QuanLyGara
 
         void LoadData()
         {           
-                string query = "SELECT * FROM DOANHSO";
+                string query = "SELECT Thang, HieuXe, SoLuotSuaChua, ThanhTien, TiLe FROM DOANHSO";
                 using (SQLiteConnection con = new SQLiteConnection(str))
                 {
                     con.Open();
@@ -87,7 +87,18 @@ namespace QuanLyGara
                     DataTable dt = new DataTable();
                     da.Fill(dt);
                     dataGridView1.DataSource = dt;
-                }         
+                }
+                // sửa header datagridview sang tiếng việt
+                dataGridView1.Columns[0].HeaderText = "Tháng";
+                dataGridView1.Columns[1].HeaderText = "Hiệu xe";
+                dataGridView1.Columns[2].HeaderText = "Số lượt sửa chữa";
+                dataGridView1.Columns[3].HeaderText = "Thành tiền";
+                dataGridView1.Columns[4].HeaderText = "Tỉ lệ";
+                dataGridView1.Columns[0].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+                dataGridView1.Columns[1].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+                dataGridView1.Columns[2].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+                dataGridView1.Columns[3].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+                dataGridView1.Columns[4].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
         }
 
         private void button8_Click(object sender, EventArgs e)
@@ -181,7 +192,7 @@ namespace QuanLyGara
             if (dataGridView1 != null && dataGridView1.RowCount>1)
             {
                 // vòng lặp để tính tiền
-                for (int i = 0; i < dataGridView1.Rows.Count - 1; i++)
+                for (int i = 0; i < dataGridView1.Rows.Count; i++)
                 {
                     try
                     {
@@ -197,7 +208,7 @@ namespace QuanLyGara
                 textBox1.Text=tien.ToString();
 
                 // vòng lặp để tính tỉ lệ
-                for (int j = 0; j < dataGridView1.Rows.Count - 1; j++)
+                for (int j = 0; j < dataGridView1.Rows.Count; j++)
                 {
                     try
                     {

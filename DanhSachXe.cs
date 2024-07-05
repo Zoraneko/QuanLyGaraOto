@@ -74,7 +74,7 @@ namespace QuanLyGara
             }
             foreach ( DataGridViewRow row in dataGridView1.Rows )
             {
-                //BUG
+                
                 row.Cells["TienNo"].Value = (int.Parse(row.Cells["TienNo"].Value.ToString())-GetHoaDon(row.Cells["BienSo"].Value.ToString())).ToString();    
             }
             

@@ -193,14 +193,17 @@ namespace QuanLyGara
 
         private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value != null   ) 
+            if (e.RowIndex > -1)
             {
-                foreach (DataGridViewRow row in dataGridView1.SelectedRows)
+                if (dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value != null)
                 {
-                    textBox3.Text = row.Cells[2].Value.ToString();
-                    comboBox1.Text = row.Cells[4].Value.ToString();
-                    numericUpDown1.Value = int.Parse(row.Cells[6].Value.ToString());
-                    comboBox2.Text = row.Cells[7].Value.ToString();
+                    foreach (DataGridViewRow row in dataGridView1.SelectedRows)
+                    {
+                        textBox3.Text = row.Cells[2].Value.ToString();
+                        comboBox1.Text = row.Cells[4].Value.ToString();
+                        numericUpDown1.Value = int.Parse(row.Cells[6].Value.ToString());
+                        comboBox2.Text = row.Cells[7].Value.ToString();
+                    }
                 }
             }
             

@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Data.SQLite;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -58,6 +59,38 @@ namespace QuanLyGara
                 {
                     MessageBox.Show("Thanh toán thành công");                
                 }
+            }
+            // In hoa don ra
+            // Kiểm tra xem dataGridView có rỗng không
+            if (textBox1.Text!=null&&textBox2.Text!=null&textBox3.Text!=null)
+            {
+                // Lấy đường dẫn đến thư mục Documents của người dùng
+                string filePath = @"D:\bill.txt";
+
+
+                // Mở stream để ghi dữ liệu
+                using (StreamWriter writer = new StreamWriter(filePath))
+                {
+                    // Ghi dữ liệu
+                    writer.Write(label2.Text.ToString() + " " + label8.Text.ToString());
+                    writer.WriteLine();
+
+                    writer.Write(label3.Text.ToString() + " " + label9.Text.ToString());
+                    writer.WriteLine();
+
+                    writer.Write(label4.Text.ToString() + " " + textBox1.Text.ToString());
+                    writer.WriteLine();
+
+                    writer.Write(label5.Text.ToString() + " " + textBox2.Text.ToString());
+                    writer.WriteLine();
+
+                    writer.Write(label6.Text.ToString() + " " + dateTimePicker1.Value.ToString());
+                    writer.WriteLine();
+
+                    writer.Write(label7.Text.ToString() + " " + textBox3.Text.ToString());
+                    writer.WriteLine();
+                }
+                MessageBox.Show("Dữ liệu đã được xuất thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             this.Close();
         }

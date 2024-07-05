@@ -36,7 +36,7 @@ namespace QuanLyGara
 
         void LoadDatabase()
         {
-            string query = "SELECT * FROM BAOCAOTON";
+            string query = "SELECT STT, Thang, VatTuPhuTung, TonDau, PhatSinh, TonCuoi FROM BAOCAOTON";
             using (SQLiteConnection con = new SQLiteConnection(str))
             {
                 con.Open();
@@ -45,6 +45,19 @@ namespace QuanLyGara
                 da.Fill(dt);
                 dataGridView1.DataSource = dt;
             }
+            // sửa header datagridview sang tiếng việt
+            dataGridView1.Columns[0].HeaderText = "STT";
+            dataGridView1.Columns[1].HeaderText = "Tháng";
+            dataGridView1.Columns[2].HeaderText = "Vật tư phụ tùng";
+            dataGridView1.Columns[3].HeaderText = "Tồn đầu kì";
+            dataGridView1.Columns[4].HeaderText = "Phát sinh";
+            dataGridView1.Columns[5].HeaderText = "Tồn cuối kì";
+            dataGridView1.Columns[0].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+            dataGridView1.Columns[1].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+            dataGridView1.Columns[2].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+            dataGridView1.Columns[3].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+            dataGridView1.Columns[4].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+            dataGridView1.Columns[5].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
         }
         private void button8_Click(object sender, EventArgs e)
         {
