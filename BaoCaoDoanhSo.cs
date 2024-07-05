@@ -199,7 +199,7 @@ namespace QuanLyGara
             string query = String.Format("SELECT SUBSTRING(HD.  NgayThuTien, 4, 7) AS Thang, TNXS.HieuXe, COUNT(*) AS SoLuotSuaChua, SUM(HD.SoTienThu) AS ThanhTien " +
             "FROM HOADON HD " +
             "JOIN TIEPNHANXESUA TNXS ON HD.BienSo=TNXS.BienSo " +
-            "WHERE SUBSTRING(Thang, 4, 2) = '{0}' " +
+            "WHERE SUBSTRING(Thang, 1, 2) = '{0}' " +
             "GROUP BY SUBSTRING(HD.NgayThuTien, 4, 7), TNXS.HieuXe;", thang);
             using (SQLiteConnection con = new SQLiteConnection(str))
             {
@@ -210,10 +210,10 @@ namespace QuanLyGara
                 dataGridView1.DataSource = dt;
             }
 
-            
+
             // Trong trường hợp datagridView không rỗng
-            /*int tien = 0;
-            if (dataGridView1 != null && dataGridView1.RowCount>1)
+            int tien = 0;
+            if (dataGridView1 != null && dataGridView1.RowCount > 1)
             {
                 // vòng lặp để tính tiền
                 for (int i = 0; i < dataGridView1.Rows.Count; i++)
@@ -229,14 +229,14 @@ namespace QuanLyGara
                         throw;
                     }
                 }
-                textBox1.Text=tien.ToString();
+                textBox1.Text = tien.ToString();
 
                 // vòng lặp để tính tỉ lệ
                 for (int j = 0; j < dataGridView1.Rows.Count; j++)
                 {
                     try
                     {
-                        dataGridView1.Rows[j].Cells["TiLe"].Value = Math.Round((double.Parse(dataGridView1.Rows[j].Cells["ThanhTien"].Value.ToString()) * 100) / (double) tien, 2);
+                        dataGridView1.Rows[j].Cells["TiLe"].Value = Math.Round((double.Parse(dataGridView1.Rows[j].Cells["ThanhTien"].Value.ToString()) * 100) / (double)tien, 2);
                     }
                     catch (Exception)
                     {
@@ -244,8 +244,14 @@ namespace QuanLyGara
                         throw;
                     }
                 }
-            }*/
-            
+            }
+            if (dataGridView1 != null && dataGridView1.Rows.Count==1)
+            {
+                tien = int.Parse(dataGridView1.Rows[0].Cells["ThanhTien"].Value.ToString());
+                textBox1.Text=tien.ToString();
+                dataGridView1.Rows[0].Cells["TiLe"].Value = 100;
+            }
+
         }
     }
 }
