@@ -15,6 +15,10 @@ namespace QuanLyGara
         public string ten;
         public string vaitro;
         string str = string.Format(@"Data Source={0}\db.db;Version=3;", Application.StartupPath);
+        public int soluongxegioihan = 30;
+        public int soluonghieuxe = 10;
+        public int soluongvattu = 200;
+        public int soloaitiencong = 100;
         public Form1()
         {
             InitializeComponent();
@@ -26,6 +30,7 @@ namespace QuanLyGara
             textBox5.Text = this.vaitro;
             dateTimePicker1.CustomFormat = "dd/MM/yyyy";
             LoadDatabase();
+            LoadQuyDinh();
         }
 
         void LoadDatabase()
@@ -53,21 +58,55 @@ namespace QuanLyGara
                 dataGridView1.Columns[5].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             }
         }
+
+        void LoadQuyDinh()
+        {
+            string query = String.Format("SELECT SoLuongHieuXe,SoLuongXeGioiHan,SoLuongVatTu,SoLoaiTienCong FROM QUYDINH WHERE id='{0}';",1);
+            using (SQLiteConnection con = new SQLiteConnection(str))
+            {
+                con.Open();
+                SQLiteDataAdapter da = new SQLiteDataAdapter(query, con);
+                DataTable dt = new DataTable();
+                da.Fill(dt);
+                soluonghieuxe = int.Parse(dt.Rows[0][0].ToString());
+                soluongxegioihan = int.Parse(dt.Rows[0][1].ToString());
+                soluongvattu = int.Parse(dt.Rows[0][2].ToString());
+                soloaitiencong = int.Parse(dt.Rows[0][3].ToString());
+            }
+        }
         private void textBox4_KeyPress(object sender, KeyPressEventArgs e) // chỉ cho nhập số
         {
             if (!Char.IsDigit(e.KeyChar) && !Char.IsControl(e.KeyChar))
                 e.Handled = true;
         }
 
+        int GetSoLuongXe(string ngayTiepNhan)
+        {
+            int soluongxe = 0;
+            string query = String.Format("SELECT COUNT(BienSo) FROM TIEPNHANXESUA WHERE NgayTiepNhan = '{0}';", ngayTiepNhan);
+            using (SQLiteConnection con = new SQLiteConnection(str))
+            {
+                con.Open();
+                SQLiteDataAdapter da = new SQLiteDataAdapter(query, con);
+                DataTable dt = new DataTable();
+                da.Fill(dt);
+                if (dt.Rows[0][0].ToString() != "")
+                    soluongxe = int.Parse(dt.Rows[0][0].ToString()); ;
+            }
+            return soluongxe;
+        }
         
         private void button1_Click(object sender, EventArgs e) // thêm
         {
-            string query = String.Format("INSERT INTO TIEPNHANXESUA (TenChuXe,BienSo,HieuXe,DiaChi,DienThoai,NgayTiepNhan) VALUES('{0}','{1}','{2}','{3}','{4}','{5}');"
-                ,textBox1.Text,textBox2.Text,comboBox1.Text,textBox3.Text,textBox4.Text,dateTimePicker1.Value.ToString("dd/MM/yyyy"));
-            Execute(query);
+            if (GetSoLuongXe(dateTimePicker1.Value.ToString("dd/MM/yyyy")) < soluongxegioihan)
+            {
+                string query = String.Format("INSERT INTO TIEPNHANXESUA (TenChuXe,BienSo,HieuXe,DiaChi,DienThoai,NgayTiepNhan) VALUES('{0}','{1}','{2}','{3}','{4}','{5}');"
+                , textBox1.Text, textBox2.Text, comboBox1.Text, textBox3.Text, textBox4.Text, dateTimePicker1.Value.ToString("dd/MM/yyyy"));
+                Execute(query,"Thêm thành công");
+            } else MessageBox.Show("Số lượng xe ngày " + dateTimePicker1.Value.ToString("dd/MM/yyyy")+" đã đạt giới hạn");            
         }
        
-        void Execute(string query)
+        void Execute(string query,string ms)
         {
             using (SQLiteConnection con = new SQLiteConnection(str)) 
             { 
@@ -76,24 +115,23 @@ namespace QuanLyGara
                 int result = cmd.ExecuteNonQuery();
                 if(result == 1)
                 {
-                    MessageBox.Show("Thành công");
+                    MessageBox.Show(ms);
                     LoadDatabase();
                 }
             }
-
         }
 
         private void button2_Click(object sender, EventArgs e) // xóa
         {
             string query = String.Format("DELETE FROM TIEPNHANXESUA WHERE BienSo='{0}' and NgayTiepNhan = '{1}' ;",textBox2.Text,dateTimePicker1.Value.ToString("dd/MM/yyyy"));
-            Execute(query);
+            Execute(query,"Xóa thành công");
         }
 
         private void button3_Click(object sender, EventArgs e) // sửa
         {
-            string query = String.Format("UPDATE TIEPNHANXESUA SET TenChuXe='{0}',HieuXe='{2}',DiaChi='{3}',DienThoai='{4}',NgayTiepNhan='{5}' WHERE BienSo='{1}';"
+            string query = String.Format("UPDATE TIEPNHANXESUA SET TenChuXe='{0}',HieuXe='{2}',DiaChi='{3}',DienThoai='{4}' WHERE BienSo='{1}' AND NgayTiepNhan='{5}';"
                 , textBox1.Text, textBox2.Text, comboBox1.Text, textBox3.Text,textBox4.Text, dateTimePicker1.Value.ToString("dd/MM/yyyy"));
-            Execute(query);
+            Execute(query, "Sửa thành công");
         }
 
         private void button4_Click(object sender, EventArgs e) // thoát
@@ -154,8 +192,9 @@ namespace QuanLyGara
             if (vaitro == "admin")
             {
                 ThayDoiQuyDinh tdqd = new ThayDoiQuyDinh();
-                this.Hide();
+                this.Hide();                
                 tdqd.ShowDialog();
+                LoadQuyDinh();
                 tdqd = null;
                 this.Show();
             }

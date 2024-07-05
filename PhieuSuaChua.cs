@@ -42,17 +42,17 @@ namespace QuanLyGara
 
             string query = String.Format("INSERT INTO PHIEUSUACHUA (STT,BienSo,NoiDung,NgaySua,TenVatTu,DonGia,SoLuong,TienCong,ThanhTien) VALUES(null,'{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}');"
                 , textBox1.Text, noidung, textBox2.Text, comboBox1.Text,donGia, soluong, tienCong, thanhTien);
-            Execute(query);
+            Execute(query,"Thêm thành công");
 
             // Query cho Bảng Vật tư
             string queryVattu1 = String.Format("UPDATE BAOCAOTON SET PhatSinh = PhatSinh + '{0}' WHERE VatTuPhuTung = '{1}';", soluong, comboBox1.Text);
             string queryVattu2 = String.Format("UPDATE BAOCAOTON SET TonCuoi = TonDau - PhatSinh WHERE VatTuPhuTung = '{0}';", comboBox1.Text);
-            Execute(queryVattu1);
-            Execute(queryVattu2);
+            Execute(queryVattu1,"");
+            Execute(queryVattu2,"");
 
         }
 
-        void Execute(string query)
+        void Execute(string query,string ms)
         {
             using (SQLiteConnection con = new SQLiteConnection(str))
             {
@@ -61,7 +61,7 @@ namespace QuanLyGara
                 int result = cmd.ExecuteNonQuery();
                 if (result == 1)
                 {
-                    MessageBox.Show("Thành công");
+                    if(ms!="") MessageBox.Show(ms);
                     LoadDatabase();
                 }
             }
@@ -71,12 +71,12 @@ namespace QuanLyGara
         private void button2_Click(object sender, EventArgs e) //xóa
         {
             string query = String.Format("DELETE FROM PHIEUSUACHUA WHERE NoiDung = '{0}' ;",textBox3.Text.ToString());
-            Execute(query);
+            Execute(query, "Xóa thành công");
             // Query cho Bảng Vật tư
             string queryVattu1 = String.Format("UPDATE BAOCAOTON SET PhatSinh = PhatSinh - '{0}' WHERE VatTuPhuTung = '{1}';", int.Parse(this.numericUpDown1.Value.ToString()), comboBox1.Text);
             string queryVattu2 = String.Format("UPDATE BAOCAOTON SET TonCuoi = TonDau - PhatSinh WHERE VatTuPhuTung = '{0}';", comboBox1.Text);
-            Execute(queryVattu1);
-            Execute(queryVattu2);
+            Execute(queryVattu1,"");
+            Execute(queryVattu2,"");
         }
 
         private void button3_Click(object sender, EventArgs e)//sửa
@@ -90,19 +90,19 @@ namespace QuanLyGara
             if(textBox3.Text.ToString() != "")
             {
                 string query = String.Format("UPDATE PHIEUSUACHUA SET TenVatTu = '{0}',DonGia = '{1}',SoLuong = '{2}',TienCong = '{3}',ThanhTien = '{4}' WHERE NoiDung = '{5}'; ",comboBox1.Text.ToString(),donGia,soLuong,tienCong,thanhTien,textBox3.Text);
-                Execute(query);
+                Execute(query,"Sửa thành công");
                 // Query cho Bảng Vật tư
                 // Dòng cũ - sửa số lượng
                 string queryVattu1 = String.Format("UPDATE BAOCAOTON SET PhatSinh = PhatSinh - '{0}' WHERE VatTuPhuTung = '{1}';", last_soluong, last_vattu_chosen);
                 string queryVattu2 = String.Format("UPDATE BAOCAOTON SET TonCuoi = TonDau - PhatSinh WHERE VatTuPhuTung = '{0}';", last_vattu_chosen);
-                Execute(queryVattu1);
-                Execute(queryVattu2);
+                Execute(queryVattu1,"");
+                Execute(queryVattu2,"");
 
                 // Dòng mới - sửa số lượng
                 string queryVattu3 = String.Format("UPDATE BAOCAOTON SET PhatSinh = PhatSinh + '{0}' WHERE VatTuPhuTung = '{1}';", int.Parse(this.numericUpDown1.Value.ToString()), comboBox1.Text);
                 string queryVattu4 = String.Format("UPDATE BAOCAOTON SET TonCuoi = TonDau - PhatSinh WHERE VatTuPhuTung = '{0}';", comboBox1.Text);
-                Execute(queryVattu3);
-                Execute(queryVattu4);
+                Execute(queryVattu3,"");
+                Execute(queryVattu4,"");
 
             }
         }

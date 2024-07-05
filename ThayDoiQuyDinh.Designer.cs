@@ -140,6 +140,7 @@
             this.button1.TabIndex = 8;
             this.button1.Text = "Lưu";
             this.button1.UseVisualStyleBackColor = false;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // button2
             // 
@@ -179,6 +180,7 @@
             this.Name = "ThayDoiQuyDinh";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Thay đổi quy định";
+            this.Load += new System.EventHandler(this.ThayDoiQuyDinh_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
