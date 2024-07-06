@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Data.SQLite;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -123,7 +124,43 @@ namespace QuanLyGara
 
         private void button1_Click(object sender, EventArgs e)
         {
+            // Kiểm tra xem dataGridView có rỗng không
+            if (dataGridView1 != null && dataGridView1.RowCount > 1)
+            {
+                // Lấy đường dẫn đến thư mục Documents của người dùng
+                string filePath = @"D:\report.csv";
 
+
+                // Mở stream để ghi dữ liệu
+                using (StreamWriter writer = new StreamWriter(filePath))
+                {
+                    // Ghi tiêu đề cột
+                    for (int i = 0; i < dataGridView1.Columns.Count; i++)
+                    {
+                        writer.Write(dataGridView1.Columns[i].HeaderText);
+                        if (i < dataGridView1.Columns.Count - 1)
+                        {
+                            writer.Write(",");
+                        }
+                    }
+                    writer.WriteLine();
+
+                    // Ghi dữ liệu từng hàng
+                    for (int i = 0; i < dataGridView1.Rows.Count - 1; i++)
+                    {
+                        for (int j = 0; j < dataGridView1.Columns.Count; j++)
+                        {
+                            writer.Write(dataGridView1.Rows[i].Cells[j].Value.ToString());
+                            if (j < dataGridView1.Columns.Count - 1)
+                            {
+                                writer.Write(",");
+                            }
+                        }
+                        writer.WriteLine();
+                    }
+                }
+                MessageBox.Show("Dữ liệu đã được xuất thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
         }
 
         private void numericUpDown1_ValueChanged(object sender, EventArgs e)
