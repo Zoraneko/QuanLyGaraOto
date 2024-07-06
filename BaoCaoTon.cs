@@ -17,6 +17,7 @@ namespace QuanLyGara
         public string ten;
         public string vaitro;
         string str = string.Format(@"Data Source={0}\db.db;Version=3;", Application.StartupPath);
+        private int selectedRowIndex = -1;
         public BaoCaoTon()
         {
             InitializeComponent();
@@ -170,7 +171,42 @@ namespace QuanLyGara
 
         private void button2_Click(object sender, EventArgs e)
         {
+            if (selectedRowIndex >= 0)
+            {
+                DataGridViewRow row = dataGridView1.Rows[selectedRowIndex];
+                int currentTonDau = Convert.ToInt32(row.Cells["TonDau"].Value);
+                int additionalQuantity = (int)numericUpDown1.Value;
+                row.Cells["TonDau"].Value = currentTonDau + additionalQuantity;
 
+                // Optionally, update the database with the new quantity
+                UpdateDatabase(row.Cells["STT"].Value.ToString(), currentTonDau + additionalQuantity);
+            }
+        }
+
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0)
+            {
+                selectedRowIndex = e.RowIndex;
+                DataGridViewRow row = dataGridView1.Rows[e.RowIndex];
+                textBox1.Text = row.Cells["VatTuPhuTung"].Value.ToString();
+                numericUpDown1.Value = Convert.ToDecimal(row.Cells["TonDau"].Value);
+            }
+        }
+
+        private void UpdateDatabase(string id, int newTonDau)
+        {
+            string query = "UPDATE BAOCAOTON SET TonDau = @TonDau WHERE STT = @STT";
+            using (SQLiteConnection con = new SQLiteConnection(str))
+            {
+                con.Open();
+                using (SQLiteCommand cmd = new SQLiteCommand(query, con))
+                {
+                    cmd.Parameters.AddWithValue("@TonDau", newTonDau);
+                    cmd.Parameters.AddWithValue("@STT", id);
+                    cmd.ExecuteNonQuery();
+                }
+            }
         }
     }
 }
