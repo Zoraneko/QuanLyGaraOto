@@ -208,5 +208,27 @@ namespace QuanLyGara
                 }
             }
         }
+
+        private void dateTimePicker1_ValueChanged(object sender, EventArgs e)
+        {
+            // Lấy thông số: tháng
+            string thang = dateTimePicker1.Value.Month.ToString();
+
+
+            // Lệnh query để lọc ra database và chỉ lấy các cột cần thiết tương ứng với tháng
+            // Tính toán và load dữ liệu mới vào datagridview
+            string query = String.Format("SELECT STT, Thang, VatTuPhuTung, TonDau, PhatSinh, TonCuoi " +
+            "FROM BAOCAOTON BCT " +
+            "WHERE THANG = "  + thang + " ");
+            using (SQLiteConnection con = new SQLiteConnection(str))
+            {
+                con.Open();
+                SQLiteDataAdapter da = new SQLiteDataAdapter(query, con);
+                DataTable dt = new DataTable();
+                da.Fill(dt);
+                dataGridView1.DataSource = dt;
+            }
+
+        }
     }
 }
