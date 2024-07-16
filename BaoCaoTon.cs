@@ -121,6 +121,7 @@ namespace QuanLyGara
                 tdqd = null;
                 this.Show();
             }
+            else MessageBox.Show("Chỉ quản lý mới có thể thay đổi quy định");
         }
 
         private void button1_Click(object sender, EventArgs e)

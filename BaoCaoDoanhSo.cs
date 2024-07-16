@@ -185,6 +185,7 @@ namespace QuanLyGara
                 tdqd = null;
                 this.Show();
             }
+            else MessageBox.Show("Chỉ quản lý mới có thể thay đổi quy định");
         }
 
         private void dateTimePicker1_ValueChanged(object sender, EventArgs e) // CODE BỊ BUG, CỨU BÉ, NGUYÊN ĐOẠN CCODE Ở DƯỚI LUÔN Á

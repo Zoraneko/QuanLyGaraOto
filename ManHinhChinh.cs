@@ -132,6 +132,7 @@ namespace QuanLyGara
                 tdqd = null;
                 this.Show();
             }
+            else MessageBox.Show("Chỉ quản lý mới có thể thay đổi quy định");
         }
 
         private void ManHinhChinh_FormClosing(object sender, FormClosingEventArgs e)
