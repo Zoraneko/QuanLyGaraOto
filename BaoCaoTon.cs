@@ -152,7 +152,7 @@ namespace QuanLyGara
                         writer.WriteLine();
 
                         // Ghi dữ liệu từng hàng
-                        for (int i = 0; i < dataGridView1.Rows.Count - 1; i++)
+                        for (int i = 0; i < dataGridView1.Rows.Count; i++)
                         {
                             for (int j = 0; j < dataGridView1.Columns.Count; j++)
                             {

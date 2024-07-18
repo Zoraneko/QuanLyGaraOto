@@ -33,7 +33,7 @@ namespace QuanLyGara
         private void button1_Click(object sender, EventArgs e) // Button IN Báo cáo
         {
             // Kiểm tra xem dataGridView có rỗng không
-            if (dataGridView1 != null && dataGridView1.RowCount > 1)
+            if (dataGridView1 != null && dataGridView1.RowCount > 0)
             {
                 // Lấy đường dẫn đến thư mục Documents của người dùng
                 SaveFileDialog saveFileDialog = new SaveFileDialog();
@@ -59,7 +59,7 @@ namespace QuanLyGara
                         writer.WriteLine();
 
                         // Ghi dữ liệu từng hàng
-                        for (int i = 0; i < dataGridView1.Rows.Count - 1; i++)
+                        for (int i = 0; i < dataGridView1.Rows.Count; i++)
                         {
                             for (int j = 0; j < dataGridView1.Columns.Count; j++)
                             {
