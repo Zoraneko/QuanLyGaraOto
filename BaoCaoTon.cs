@@ -130,38 +130,44 @@ namespace QuanLyGara
             if (dataGridView1 != null && dataGridView1.RowCount > 1)
             {
                 // Lấy đường dẫn đến thư mục Documents của người dùng
-                string filePath = @"D:\report.csv";
+                SaveFileDialog saveFileDialog = new SaveFileDialog();
+                saveFileDialog.InitialDirectory = @"D:\";
+                saveFileDialog.Filter = "CSV File (*.csv)|*.csv|All Files (*.*)|*.*";
+                saveFileDialog.DefaultExt = ".csv";
+                saveFileDialog.FileName = "report.csv";
 
-
-                // Mở stream để ghi dữ liệu
-                using (StreamWriter writer = new StreamWriter(filePath))
+                if (saveFileDialog.ShowDialog() == DialogResult.OK)
                 {
-                    // Ghi tiêu đề cột
-                    for (int i = 0; i < dataGridView1.Columns.Count; i++)
+                    using (StreamWriter writer = new StreamWriter(saveFileDialog.FileName,false,Encoding.UTF8))
                     {
-                        writer.Write(dataGridView1.Columns[i].HeaderText);
-                        if (i < dataGridView1.Columns.Count - 1)
+                        // Ghi tiêu đề cột
+                        for (int i = 0; i < dataGridView1.Columns.Count; i++)
                         {
-                            writer.Write(",");
-                        }
-                    }
-                    writer.WriteLine();
-
-                    // Ghi dữ liệu từng hàng
-                    for (int i = 0; i < dataGridView1.Rows.Count - 1; i++)
-                    {
-                        for (int j = 0; j < dataGridView1.Columns.Count; j++)
-                        {
-                            writer.Write(dataGridView1.Rows[i].Cells[j].Value.ToString());
-                            if (j < dataGridView1.Columns.Count - 1)
+                            writer.Write(dataGridView1.Columns[i].HeaderText);
+                            if (i < dataGridView1.Columns.Count - 1)
                             {
                                 writer.Write(",");
                             }
                         }
                         writer.WriteLine();
+
+                        // Ghi dữ liệu từng hàng
+                        for (int i = 0; i < dataGridView1.Rows.Count - 1; i++)
+                        {
+                            for (int j = 0; j < dataGridView1.Columns.Count; j++)
+                            {
+                                writer.Write(dataGridView1.Rows[i].Cells[j].Value.ToString());
+                                if (j < dataGridView1.Columns.Count - 1)
+                                {
+                                    writer.Write(",");
+                                }
+                            }
+                            writer.WriteLine();
+                        }
+                        MessageBox.Show("Dữ liệu đã được xuất thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                 }
-                MessageBox.Show("Dữ liệu đã được xuất thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                
             }
         }
 
